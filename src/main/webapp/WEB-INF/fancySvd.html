@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<META content="SVD decomposition" name=keywords>
+<META content=LR-Zerlegung name=keywords xml:lang="de">
+<META content="SVD decomposition" name=description>
+<SCRIPT type=text/javascript><!--
+function evalIt(matrixA, textareaP, textareaL, textareaU,matrixQ)
+{
+  var matrix = matrixA;
+  var Query = matrixQ;
+
+		rijcol=matrix.length+matrix[0].length;
+		var A=zeroMatrix(matrix,matrix.length,matrix[0].length);
+		var V=zeroMatrix(matrix,matrix[0].length,matrix[0].length);
+		var W2=zeroMatrix(matrix,matrix.length,matrix[0].length);
+		var Q=zeroMATRIX(Query,Query.length,Query[0].length);
+
+		var matrices=svdCalculation(A,W2,V,Q,Sim);
+		var temp = matrices['A'];
+		    textareaP.value = matr2str(matrixfract(temp,temp.length,temp[0].length));
+		var temp = matrices['V'];
+		    textareaL.value = matr2str(matrixfract(temp,temp[0].length,temp[0].length));
+		var temp = matrices['W2'];
+		    textareaU.value = matr2str(matrixfract(temp,temp.length,temp[0].length));
+		    }
+
+
+function zeroMatrix(matrix,rowsNumber,columnNumber) {
+  var identMatr = new Array(rowsNumber);
+	  for (var i=0; i < rowsNumber; i++) {
+        identMatr[i] = new Array(columnNumber);
+        for (var j=0; j < columnNumber; j++) {
+            identMatr[i][j] = matrix[i][j][0];
+    }
+  }
+  return identMatr;
+}
+
+function reduceWhitespaces(str) {
+  str = str.substr( str.search(/\S/) ) //leading whitespace
+  str = str.replace(/\t/g, " ");//converting tabs into spaces
+  str = str.replace(/\s+$/g,"")//end white space
+  return str;
+}
+
+function matr2str(matrix) {
+  var str = "";
+  var maxNumer = getMaxDigits(matrix, 0);
+  var maxDenom = getMaxDigits(matrix, 1);
+  var diff = 0;
+
+  for (var i=0; i < matrix.length; i++) {
+    for (var j=0; j < matrix[0].length; j++) {
+      if (matrix[i][j][0] == undefined ||
+          matrix[i][j][1] == undefined) {
+            errorMsg("Undefined element at [" + i +"]["+ j+"]");
+      }
+      diff = maxNumer - matrix[i][j][0].toString().length;
+      for (var k=0; k < diff; k++) {
+        str += " ";
+      }
+      str += matrix[i][j][0];
+      if (matrix[i][j][1] != 1 && matrix[i][j][0] != 0) {
+        str += "/" + matrix[i][j][1];
+      } else {
+        str += "  ";
+      }
+      diff = maxDenom - matrix[i][j][1].toString().length;
+      for (var k=0; k < diff+1; k++)
+        str += " ";
+    }
+    str += "\n";
+  }
+  return str;
+}
+function clearFileds() {
+  for (var i = 0; i < clearFileds.arguments.length; i++) {
+    clearFileds.arguments[i].value = "";
+  }
+}
+
+function svdCalculation()
+{ }
+
+</SCRIPT>
+<META content="MSHTML 6.00.6000.16788" name=GENERATOR></HEAD>
+<body onload=document.forms[0].matrixA.focus();>
+
+<H1 class=center>Singluar value decomposition<SPAN xml:lang="de"></SPAN></H1>
+<style>
+    body{
+    background-color: linen;
+    }
+    p {
+    background-color:linen
+    <comment>rgb(0,255,0);</comment>
+    }
+    p.ex {
+    margin-top: 10px;
+    margin-bottom: 100px;
+    margin-right: 150px;
+    margin-left: 150px;
+    }
+</style>
+
+<P>Enter an <CODE><B>NxM</B></CODE> matrix in the field 'Matrix&nbsp;<B>A</B>' -
+    row by row, separating the elements with spaces. The resulted matrices
+    <CODE>U</CODE>, <CODE>S</CODE> and <CODE>V</CODE>, such that <CODE>A =UxSxV</CODE> <CODE>P </CODE> will appear
+    respectively in fields 'Matrix&nbsp;<B>U</B>',
+    'Matrix&nbsp;<B>S</B>' and 'Matrix&nbsp;<B>V</B>'
+
+<DIV class=form>
+    <FORM style="TEXT-ALIGN: center" action="">
+        <DIV class=center>
+            <TABLE summary="table" border=0>
+                <TBODY>
+                <TR>
+                    <TD vAlign=bottom align=middle>
+                        <LABEL title="accesskey 'P'" accessKey=p
+                                                          for=permut_matrix>Matrix&nbsp;<B class=accesskey>U</B></LABEL>
+                    </TD>
+
+                    <TD vAlign=bottom align=middle><LABEL title="accesskey 'A'" accessKey=a
+                                                          for=matrixA>Matrix&nbsp;<B class=accesskey>A</B> </LABEL>
+                    </TD>
+                </TR>
+
+                <TR>
+                    <TD align=right><TEXTAREA class=output id=permut_matrix
+                                              title="U is an m-by-m unitary matrix, LSI: the texts" name=permut_matrix
+                                              rows=12 cols=45>U is an m-by-m unitary matrix</TEXTAREA>
+                    </TD>
+                    <TD align=left><TEXTAREA class=input id=matrixA title="Enter your square matrix here, accesskey 'A'"
+                                             onfocus="if (this.value=='Enter your square matrix here')&#13;&#10;                this.value=''"
+                                             name=matrixA rows=12 cols=45>
+</TEXTAREA></TD>
+                </TR>
+                <TR>
+                    <TD vAlign=bottom align=middle><LABEL title="accesskey 'L'" accessKey=L
+                                                          for=matrixL>Matrix V </LABEL>
+                    </TD>
+                    <TD vAlign=bottom align=middle><LABEL title="accesskey 'U'" accessKey=u
+                                                          for=matrixU>Matrix S or eigenvalues</LABEL>
+                    </TD>
+                </TR>
+                <TR>
+                    <TD align=middle><TEXTAREA class=output id=matrixL
+                                               title="V is an n-by-n unitary matrix, in LSI the words" name=matrixL
+                                               rows=10 cols=45>V is an n-by-n unitary matrix</TEXTAREA>
+                    </TD>
+                    <TD align=middle><TEXTAREA class=output id=matrixU
+                                               title="S are the eigenvalues, tells you how much you can compress the data "
+                                               name=matrixU rows=10 cols=45>S are the eigenvalues </TEXTAREA>
+                    </TD>
+                </TR>
+                <TR>
+                    <TD vAlign=bottom align=middle><LABEL title="accesskey 'SOL'" accessKey=SOL
+                                                          for=matrixSOL>Matrix&nbsp;<B class=accesskey>Solution</B></LABEL>
+                    </TD>
+                </TR> 9704915877
+                </TEXTAREA>
+                </TD>
+                <TD align=middle><TEXTAREA class=input id=matrixSOL title="Solution " name=matrixSOL rows=10
+                                           cols=45></TEXTAREA>
+                </TD>
+                </TR>
+                </TBODY>
+            </TABLE>
+        </DIV>
+        <P><INPUT onkeypress="evalIt();"
+                  title="Decompose the matrix"
+                  accessKey=x onclick="evalIt();"
+                  type=button value="Calculate SVD A = U*S*V  ">
+        </P></FORM>
+
+    <P><INPUT onkeypress="square();"
+              title="Matrix operation"
+              accessKey=x onclick="evalIt();"
+              type=button value="Matrix Operation">
+    </P></FORM>
+</DIV>
+<DIV class=fancysvd>
+</DIV>
+</body>
+</HTML>

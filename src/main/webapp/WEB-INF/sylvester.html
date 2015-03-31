@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>sylvester example</title>
+    <style>
+        body{
+        background-color: linen;
+        }
+        p {
+        background-color:linen
+        <comment>rgb(0,255,0);</comment>
+        }
+        p.ex {
+        margin-top: 10px;
+        margin-bottom: 100px;
+        margin-right: 150px;
+        margin-left: 150px;
+        }
+    </style>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/sylvester/0.1.3/sylvester.js"></script>
+</head>
+<a href=index.html> Home</a><br>
+
+<script type="text/javascript">
+var M1 = $M([
+  [1,7,3],
+  [9,4,0],
+  [2,7,1]
+]);
+
+var M2 = $M([
+  [6,2,8],
+  [9,1,3],
+  [0,7,6]
+]);
+var V1 = $V([3,4,5]);
+var V2 = $V([9,-3,0]);
+
+var d = V1.dot(V2);
+// answer will be 15
+
+var c = V1.cross(V2);
+
+var M = M1.x(M2);
+
+var x = $V([1, 2, 3]);
+var a = $M([[1, 2], [3, 4]]);
+
+var svd = a.svd();
+
+console.log(a.e(2, 1));
+console.log(x.e(3));
+
+
+var x = $V([1, 2, 3]);
+var a = $M([[1, 2], [3, 4]]);
+//[U, S, V] = a.svd()
+var pca = a.pcaProject(1);
+
+
+console.log(qr)
+console.log(M);
+
+</script>
+</body>
+</html>
